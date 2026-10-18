@@ -1,56 +1,27 @@
-# Welcome to your Expo app 👋
+# Lab Timer & Practice Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Problem
 
-## Get started
+A lab instructor wants a small screen where students can track how many practice
+problems they have solved and how long they have been working.
 
-1. Install dependencies
+# Approach
 
-   ```bash
-   npm install
-   ```
+- **LabScreen** (parent) owns the shared state: `solved` and `isRunning`
+  (both with `useState`). It also calls the custom hook `useStopwatch`.
+- **PracticeTracker** displays the solved count with "Solve +1" and "Reset"
+  buttons, and shows "Great job!" (conditional rendering) once solved reaches 5.
+- **Stopwatch** displays the elapsed time (mm:ss) and "Running..." or "Paused"
+  based on `isRunning`.
+- **useStopwatch(isRunning)** is a custom hook that uses `useState` for seconds
+  and `useEffect` with `setInterval`. Its cleanup function (`clearInterval`)
+  runs when `isRunning` changes and when the component unmounts.
+- State is lifted to LabScreen so the sibling components PracticeTracker and
+  Stopwatch stay in sync through their shared parent.
 
-2. Start the app
+## How to Run in Expo Go
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Install dependencies: `npm install`
+2. Start the app: `npx expo start`
+3. Scan the QR code with Expo Go on your phone (same Wi-Fi), or press `w` to
+   open it in the browser.
